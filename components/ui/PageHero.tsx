@@ -22,7 +22,7 @@ const PageHero = ({
                 <img
                     src={image}
                     alt={title}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover object-[center_top]"
                 />
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />

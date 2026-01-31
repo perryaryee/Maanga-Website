@@ -4,6 +4,11 @@ import FadeIn from "@/components/animations/FadeIn";
 import PageHero from "@/components/ui/PageHero";
 import Button from "@/components/ui/Button";
 import image_2 from "../../assets/Crekit_2.jpg";
+import too_big from "../../assets/too_big.jpg";
+import local from "../../assets/local.jpg";
+import relocating from "../../assets/relocating.jpg";
+import intercity from "../../assets/intercity.jpg";
+
 
 export default function Services() {
     return (
@@ -11,7 +16,7 @@ export default function Services() {
             <PageHero
                 title="Our Services"
                 subtitle="Comprehensive logistics solutions for individuals, businesses, and enterprises across Ghana"
-                image="https://images.unsplash.com/photo-1601581875305-f5a44b2c2af0?w=1920&q=80"
+                image={too_big.src}
             />
 
             <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
@@ -58,7 +63,7 @@ export default function Services() {
                                 </div>
                                 <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl group">
                                     <img
-                                        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
+                                        src={local.src}
                                         alt="Local Delivery"
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         loading="lazy"
@@ -74,7 +79,7 @@ export default function Services() {
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
                                 <div className="order-2 lg:order-1 relative h-[400px] rounded-2xl overflow-hidden shadow-xl group">
                                     <img
-                                        src="https://images.unsplash.com/photo-1556912172-45b7fa8ef810?w=800&q=80"
+                                        src={relocating.src}
                                         alt="Relocation & Moving"
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         loading="lazy"
@@ -129,9 +134,9 @@ export default function Services() {
                                         <span className="h-px w-8 bg-awcc-primary"></span>
                                         <span className="text-sm font-semibold text-awcc-primary uppercase tracking-wider">Service</span>
                                     </div>
-                                    <h2 className="text-4xl font-bold text-gray-900 mb-6">E-Commerce Logistics</h2>
+                                    <h2 className="text-4xl font-bold text-gray-900 mb-6">Intercity Delivery</h2>
                                     <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                                        Tailored logistics solutions for online sellers. Our e-commerce logistics service helps SMEs scale their delivery operations with daily deliveries, flexible subscription plans, and competitive bulk delivery rates.
+                                        Tailored logistics solutions for online sellers. Our intercity delivery service helps SMEs scale their delivery operations with daily deliveries, flexible subscription plans, and competitive bulk delivery rates.
                                     </p>
                                     <div className="space-y-4">
                                         <div className="flex items-start gap-3">
@@ -156,7 +161,7 @@ export default function Services() {
                                 </div>
                                 <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl group">
                                     <img
-                                        src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=800&q=80"
+                                        src={intercity.src}
                                         alt="E-Commerce Logistics"
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         loading="lazy"

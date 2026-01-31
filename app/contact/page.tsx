@@ -5,6 +5,7 @@ import { useState } from "react";
 import FadeIn from "@/components/animations/FadeIn";
 import PageHero from "@/components/ui/PageHero";
 import image_9 from "../../assets/creket_10.jpg";
+import contact from "../../assets/contact.jpg";
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ export default function Contact() {
             <PageHero
                 title="Contact Us"
                 subtitle="Have questions about our services, partnerships, or need support? We'd love to hear from you."
-                image="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1920&q=80"
+                image={contact.src}
             />
 
             {/* Main Content */}
@@ -51,8 +52,8 @@ export default function Contact() {
                                         </svg>
                                     </div>
                                     <h3 className="text-xl font-bold mb-4">Email Us</h3>
-                                    <p className="text-white/90 mb-1 text-sm">info@swiftgo.gh</p>
-                                    <p className="text-white/90 text-sm">support@swiftgo.gh</p>
+                                    <p className="text-white/90 mb-1 text-sm">info@maangalogistics.gh</p>
+                                    <p className="text-white/90 text-sm">support@maangalogistics.gh</p>
                                 </div>
                             </div>
                         </FadeIn>
@@ -67,7 +68,7 @@ export default function Contact() {
                                         </svg>
                                     </div>
                                     <h3 className="text-xl font-bold mb-4">Call Us</h3>
-                                    <p className="text-white/90 mb-1 text-sm">+233 XX XXX XXXX</p>
+                                    <p className="text-white/90 mb-1 text-sm">+233 55 316 5231</p>
                                     <p className="text-white/90 text-sm">Mon-Fri, 8am-5pm</p>
                                 </div>
                             </div>

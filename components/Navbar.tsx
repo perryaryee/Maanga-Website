@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import logo from "../assets/logo.png"
+import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +30,7 @@ const Navbar = () => {
     { name: "Services", href: "/services" },
     // { name: "Partner Drivers", href: "/partner-drivers" },
     // { name: "Corporate Solutions", href: "/corporate-solutions" },
-    { name: "Careers", href: "/careers" },
+    // { name: "Careers", href: "/careers" },
     // { name: "News", href: "/news" },
     { name: "Contact", href: "/contact" },
   ];
@@ -54,10 +56,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link href="/" className="font-bold text-2xl tracking-tight text-awcc-primary hover:text-awcc-primary-light transition-colors">
-              <span className="relative">
-                SwiftGo
-                <span className="absolute -bottom-1 left-0 w-0 h-1 bg-awcc-primary transition-all duration-300 group-hover:w-full"></span>
-              </span>
+              <Image src={logo} alt="logo" height={150} width={150} />
             </Link>
           </div>
           <div className="hidden md:block">
@@ -79,7 +78,7 @@ const Navbar = () => {
               })}
               <Link href="/partner-drivers">
                 <button className="px-6 py-2.5 rounded-lg text-sm font-semibold transition-all bg-awcc-primary text-white hover:bg-awcc-primary-light shadow-lg hover:shadow-xl hover:-translate-y-0.5">
-                  Become a Driver
+                  Become a Rider
                 </button>
               </Link>
             </div>
@@ -127,6 +126,13 @@ const Navbar = () => {
                   </Link>
                 );
               })}
+              <Link 
+                href="/partner-drivers"
+                onClick={() => setIsOpen(false)}
+                className="block px-3 py-2.5 mt-2 mx-2 rounded-lg text-base font-semibold transition-all bg-awcc-primary text-white hover:bg-awcc-primary-light shadow-lg text-center"
+              >
+                Become a Rider
+              </Link>
             </div>
           </motion.div>
         )}

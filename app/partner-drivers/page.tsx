@@ -4,6 +4,7 @@ import FadeIn from "@/components/animations/FadeIn";
 import PageHero from "@/components/ui/PageHero";
 import Button from "@/components/ui/Button";
 import image_2 from "../../assets/Crekit_2.jpg";
+import partnerdrivers from "../../assets/deliverYguy.jpg";
 
 export default function PartnerDrivers() {
     return (
@@ -11,7 +12,7 @@ export default function PartnerDrivers() {
             <PageHero
                 title="Drive with SwiftGo"
                 subtitle="Join our network of verified partner drivers and earn flexible income with reliable weekly payouts"
-                image="https://images.unsplash.com/photo-1601581875305-f5a44b2c2af0?w=1920&q=80"
+                image={ partnerdrivers.src}
             />
 
             <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">

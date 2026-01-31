@@ -3,14 +3,17 @@ import FadeIn from "@/components/animations/FadeIn";
 import PageHero from "@/components/ui/PageHero";
 import image_1 from "../../assets/crekit_7.jpg";
 import image_2 from "../../assets/Crekit_2.jpg";    
+import hero from "../../assets/manga_service.jpg";
+import about from "../../assets/pacel.jpg";
+
 
 export default function About() {
     return (
         <div className="bg-white min-h-screen">
             <PageHero
-                title="About SwiftGo Ghana"
-                subtitle="SwiftGo Ghana is a technology-driven logistics company providing reliable delivery, relocation, and corporate dispatch services across Ghana using a hybrid fleet model."
-                image="https://images.unsplash.com/photo-1601581875305-f5a44b2c2af0?w=1920&q=80"
+                title="About Maanga "
+                subtitle="Maanga Logistics Ghana is a technology-driven logistics company providing reliable delivery, relocation, and corporate dispatch services across Ghana using a hybrid fleet model."
+                image={hero.src}
             />
 
             <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
@@ -26,20 +29,20 @@ export default function About() {
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                                 <div>
                                     <p className="text-lg text-gray-600 leading-relaxed mb-4">
-                                        SwiftGo Ghana was created to address the critical challenges facing Ghana's logistics sector. Traditional delivery services were unreliable, lacked transparency, and failed to meet the growing demands of businesses and individuals across the country.
+                                        Maanga Logistics Ghana was created to address the critical challenges facing Ghana's logistics sector. Traditional delivery services were unreliable, lacked transparency, and failed to meet the growing demands of businesses and individuals across the country.
                                     </p>
                                     <p className="text-lg text-gray-600 leading-relaxed mb-4">
                                         We identified key problems: delayed deliveries, untracked packages, unprofessional service, and limited coverage. These issues were hindering business growth and frustrating customers who needed reliable logistics solutions.
                                     </p>
                                     <p className="text-lg text-gray-600 leading-relaxed">
-                                        SwiftGo solves these challenges by combining cutting-edge technology with a network of verified driver partners. Our platform enables real-time tracking, transparent pricing, and reliable service delivery across Ghana, making movement swift, safe, and smart.
+                                        Maanga Logistics solves these challenges by combining cutting-edge technology with a network of verified driver partners. Our platform enables real-time tracking, transparent pricing, and reliable service delivery across Ghana, making movement swift, safe, and smart.
                                     </p>
                                 </div>
                                 <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl group">
                                     <img
-                                        src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800&q=80"
-                                        alt="SwiftGo Team"
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        src={about.src}
+                                        alt="Maanga Logistics Team"
+                                        className="w-full h-full object-cover  object-[center_top] transition-transform duration-700 group-hover:scale-110"
                                         loading="lazy"
                                     />
                                 </div>
@@ -80,7 +83,7 @@ export default function About() {
                     </FadeIn>
 
                     {/* Our Fleet */}
-                    <FadeIn delay={0.4}>
+                    {/* <FadeIn delay={0.4}>
                         <div className="mb-24">
                             <div className="inline-flex items-center gap-2 mb-4">
                                 <span className="h-px w-8 bg-awcc-primary"></span>
@@ -111,7 +114,7 @@ export default function About() {
                                 ))}
                             </div>
                         </div>
-                    </FadeIn>
+                    </FadeIn> */}
 
                     {/* Our Values */}
                     <FadeIn delay={0.5}>
