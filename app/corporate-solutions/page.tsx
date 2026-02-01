@@ -3,7 +3,7 @@ import Link from 'next/link';
 import FadeIn from "@/components/animations/FadeIn";
 import PageHero from "@/components/ui/PageHero";
 import Button from "@/components/ui/Button";
-import image_2 from "../../assets/Crekit_2.jpg";
+import image_2 from "../../assets/image_1.jpg";
 
 export default function CorporateSolutions() {
     return (
