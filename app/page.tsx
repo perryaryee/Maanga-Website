@@ -62,7 +62,7 @@ export default function Home() {
             <FadeIn direction="up" immediate delay={0.3}>
               <div className="grid grid-cols-2 sm:flex sm:flex-row gap-5">
                 <Link href="#download-app" className="group">
-                <img src={playstore.src} alt="playstore" width={200} height={200} /> 
+                <img src={playstore.src} alt="playstore" width={218} height={218} /> 
                 </Link>
                 <Link href="#download-app" className="group">
                 <img src={appstore.src} alt="appstore" width={190} height={190} /> 

@@ -11,7 +11,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "SwiftGo Ghana - Swift. Safe. Smart Deliveries Across Ghana",
+  title: "Maanga Logistics - Swift. Safe. Smart Deliveries Across Ghana",
   description: "Your trusted partner for on-demand delivery, relocation, and business logistics across Ghana. Download our app or become a driver partner today.",
 };
 

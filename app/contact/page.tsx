@@ -53,7 +53,6 @@ export default function Contact() {
                                     </div>
                                     <h3 className="text-xl font-bold mb-4">Email Us</h3>
                                     <p className="text-white/90 mb-1 text-sm">info@maangalogistics.gh</p>
-                                    <p className="text-white/90 text-sm">support@maangalogistics.gh</p>
                                 </div>
                             </div>
                         </FadeIn>
@@ -68,7 +67,9 @@ export default function Contact() {
                                         </svg>
                                     </div>
                                     <h3 className="text-xl font-bold mb-4">Call Us</h3>
-                                    <p className="text-white/90 mb-1 text-sm">+233 55 316 5231</p>
+                                    <p className="text-white/90 mb-1 text-sm">+233 54 013 1193</p>
+                                    <p className="text-white/90 mb-1 text-sm">+233 30 243 3953</p>
+
                                     <p className="text-white/90 text-sm">Mon-Fri, 8am-5pm</p>
                                 </div>
                             </div>

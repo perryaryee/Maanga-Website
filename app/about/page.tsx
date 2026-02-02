@@ -60,7 +60,7 @@ export default function About() {
                             <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Mission</h2>
                             <div className="bg-gradient-to-br from-awcc-primary/10 to-awcc-primary/5 rounded-2xl p-12 border border-awcc-primary/20">
                                 <p className="text-2xl font-semibold text-gray-900 leading-relaxed max-w-4xl">
-                                    "To redefine delivery in Ghana by making movement swift, safe, and smart."
+                                    "Our vision is to become the leading force in logistics and transportation services, recognized for our commitment to excellence, cost-effective logistics service, and customer-centric solutions. We strive to reshape the future with confidence and integrity, providing reliable service solutions."
                                 </p>
                             </div>
                         </div>
