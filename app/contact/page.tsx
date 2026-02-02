@@ -85,9 +85,12 @@ export default function Contact() {
                                 </div>
                                 <h3 className="text-xl font-bold mb-4 text-gray-900">Visit Us</h3>
                                 <p className="text-gray-600 text-sm leading-relaxed">
-                                    Accra Headquarters<br />
-                                    Accra, Ghana<br />
-                                    West Africa
+                                    Achimota<br />
+                                    Tetteh Okulley Street<br />
+                                    Accra, Ghana
+                                </p>
+                                <p className="text-gray-600 text-sm leading-relaxed">
+                                    GE-373-2740
                                 </p>
                             </div>
                         </FadeIn>
