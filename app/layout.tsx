@@ -21,9 +21,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden">
       <body
-        className={`${outfit.variable} antialiased flex flex-col min-h-screen font-sans`}
+        className={`${outfit.variable} antialiased flex flex-col min-h-screen font-sans overflow-x-hidden`}
       >
         <Navbar />
         <main className="flex-grow">

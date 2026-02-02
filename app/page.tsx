@@ -18,15 +18,15 @@ import deliveryguy__ from "../assets/deliverYguy.jpg";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative  min-h-screen flex items-center justify-center overflow-hidden w-full pt-10  lg:pt-0">
         {/* Background Image */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 w-full">
           <img
             src={image2.src}
             alt="Delivery truck on road"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover max-w-full"
             loading="eager"
           />
           {/* Gradient Overlay */}
@@ -34,8 +34,8 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-32">
-          <div className="max-w-3xl">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 sm:py-24 lg:py-32 overflow-x-hidden">
+          <div className="max-w-3xl w-full">
             <FadeIn direction="up" immediate>
               <div className=" lg:pt-10">
 
@@ -43,7 +43,7 @@ export default function Home() {
             </FadeIn>
 
             <FadeIn direction="up" immediate delay={0.1}>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-8">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-8 break-words">
                 Swift. Safe. Smart{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-awcc-primary 
                 to-yellow-200">
@@ -60,12 +60,12 @@ export default function Home() {
             </FadeIn>
 
             <FadeIn direction="up" immediate delay={0.3}>
-              <div className="grid grid-cols-2 sm:flex sm:flex-row gap-5">
-                <Link href="#download-app" className="group">
-                <img src={playstore.src} alt="playstore" width={218} height={218} /> 
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
+                <Link href="#download-app" className="group w-full sm:w-auto">
+                <img src={playstore.src} alt="playstore" className="w-full max-w-[160px] sm:max-w-[218px] h-auto" /> 
                 </Link>
-                <Link href="#download-app" className="group">
-                <img src={appstore.src} alt="appstore" width={190} height={190} /> 
+                <Link href="#download-app" className="group w-full sm:w-auto">
+                <img src={appstore.src} alt="appstore" className="w-full max-w-[160px] sm:max-w-[190px] h-auto" /> 
                 </Link>
               </div>
             </FadeIn>
