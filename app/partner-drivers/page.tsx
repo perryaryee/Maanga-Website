@@ -10,21 +10,21 @@ export default function PartnerDrivers() {
     return (
         <div className="bg-white min-h-screen">
             <PageHero
-                title="Drive with SwiftGo"
+                title="Drive with Maanga"
                 subtitle="Join our network of verified partner drivers and earn flexible income with reliable weekly payouts"
                 image={ partnerdrivers.src}
             />
 
             <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
                 <div className="max-w-7xl mx-auto">
-                    {/* Why Join SwiftGo */}
+                    {/* Why Join Maanga Logistics */}
                     <FadeIn delay={0.1}>
                         <div className="mb-24">
                             <div className="inline-flex items-center gap-2 mb-4">
                                 <span className="h-px w-8 bg-awcc-primary"></span>
                                 <span className="text-sm font-semibold text-awcc-primary uppercase tracking-wider">Benefits</span>
                             </div>
-                            <h2 className="text-4xl font-bold text-gray-900 mb-8">Why Join SwiftGo?</h2>
+                            <h2 className="text-4xl font-bold text-gray-900 mb-8">Why Join Maanga Logistics?</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {[
                                     {
@@ -44,7 +44,7 @@ export default function PartnerDrivers() {
                                     },
                                     {
                                         title: "Support System",
-                                        desc: "24/7 support from SwiftGo team. We're here to help you succeed.",
+                                        desc: "24/7 support from Maanga Logistics team. We're here to help you succeed.",
                                         icon: "M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 5.434m0 0a5.991 5.991 0 00-1.937 3.918 3.001 3.001 0 004.682 2.72 9.09 9.09 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
                                     }
                                 ].map((item, index) => (
@@ -127,7 +127,7 @@ export default function PartnerDrivers() {
                     <FadeIn delay={0.4}>
                         <div className="bg-gradient-to-br from-awcc-primary to-awcc-primary-light rounded-2xl p-12 text-white text-center">
                             <h2 className="text-3xl font-bold mb-4">Ready to Start Earning?</h2>
-                            <p className="text-xl mb-8 text-white/90">Join SwiftGo today and become a verified partner driver</p>
+                            <p className="text-xl mb-8 text-white/90">Join Maanga Logistics today and become a verified partner driver</p>
                             <Link href="/contact">
                                 <Button size="lg" className="bg-white text-awcc-primary hover:bg-gray-100 px-8 py-4 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
                                     Apply Now
