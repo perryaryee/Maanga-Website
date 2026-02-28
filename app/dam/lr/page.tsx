@@ -81,7 +81,7 @@ function LocationRequestContent() {
 
     try {
       // Use relative API URL or environment variable
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.swiftgo.com/api';
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.maangalogistics.com/api';
       const response = await fetch(`${API_BASE_URL}/location-requests/respond/${token}`, {
         method: 'POST',
         headers: {
@@ -154,12 +154,7 @@ function LocationRequestContent() {
             {isResolvingAddress ? (
               <p style={styles.locationAddress}>Resolving address...</p>
             ) : (
-              <p style={styles.locationName}>{address || `${location.coords.latitude.toFixed(6)}, ${location.coords.longitude.toFixed(6)}`}</p>
-            )}
-            {!isResolvingAddress && address && (
-              <p style={styles.locationCoords}>
-                {location.coords.latitude.toFixed(6)}, {location.coords.longitude.toFixed(6)}
-              </p>
+              <p style={styles.locationName}>{address || 'Address could not be determined'}</p>
             )}
             <button
               style={styles.confirmButton}
@@ -259,13 +254,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: '18px',
     fontWeight: '600',
     color: '#1a1a1a',
-    marginBottom: '8px',
-    lineHeight: 1.4,
-  },
-  locationCoords: {
-    fontSize: '12px',
-    color: '#999',
     marginBottom: '24px',
+    lineHeight: 1.4,
   },
   getLocationButton: {
     width: '100%',
