@@ -76,7 +76,7 @@ const Footer = () => {
                                 <div>
                                     <p className="font-medium text-white">+233 55 316 5231</p>
                                     <p className="font-medium text-white">+233 30 243 3953</p>
-                                    <p>Mon-Fri, 8am-5pm</p>
+                                    {/* <p>Mon-Fri, 8am-5pm</p> */}
                                 </div>
                             </li>
                         </ul>
