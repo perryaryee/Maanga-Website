@@ -36,24 +36,30 @@ function LocationRequestContent() {
         setIsLoading(false);
         setIsResolvingAddress(true);
 
-        // Reverse geocode to get real location name (address) for the UI
+        // Reverse geocode to get real address only (never show coordinates)
         try {
+          let resolvedAddress = '';
           const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
           if (googleApiKey) {
-            const response = await fetch(
+            const res = await fetch(
               `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${googleApiKey}`
             );
-            const data = await response.json();
-            if (data && data.status === 'OK' && data.results && data.results.length > 0) {
-              setAddress(data.results[0].formatted_address);
-            } else {
-              setAddress(`${position.coords.latitude}, ${position.coords.longitude}`);
+            const data = await res.json();
+            if (data?.status === 'OK' && data.results?.length > 0) {
+              resolvedAddress = data.results[0].formatted_address;
             }
-          } else {
-            setAddress(`${position.coords.latitude}, ${position.coords.longitude}`);
           }
+          if (!resolvedAddress) {
+            const nom = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`,
+              { headers: { 'Accept-Language': 'en' } }
+            );
+            const nomData = await nom.json();
+            if (nomData?.display_name) resolvedAddress = nomData.display_name;
+          }
+          setAddress(resolvedAddress || '');
         } catch (e) {
-          setAddress(`${position.coords.latitude}, ${position.coords.longitude}`);
+          setAddress('');
         } finally {
           setIsResolvingAddress(false);
         }
@@ -149,10 +155,13 @@ function LocationRequestContent() {
 
         {location ? (
           <div style={styles.locationCard}>
-            <div style={styles.locationIcon}>📍</div>
+            <div style={styles.locationCardAccent} />
+            <div style={styles.locationIconWrap}>
+              <span style={styles.locationIcon}>📍</span>
+            </div>
             <h2 style={styles.locationTitle}>Your location</h2>
             {isResolvingAddress ? (
-              <p style={styles.locationAddress}>Resolving address...</p>
+              <p style={styles.locationResolving}>Resolving address...</p>
             ) : (
               <p style={styles.locationName}>{address || 'Address could not be determined'}</p>
             )}
@@ -165,16 +174,19 @@ function LocationRequestContent() {
           </div>
         ) : (
           <div style={styles.locationCard}>
-            <div style={styles.locationIcon}>📍</div>
+            <div style={styles.locationCardAccent} />
+            <div style={styles.locationIconWrap}>
+              <span style={styles.locationIcon}>📍</span>
+            </div>
             <h2 style={styles.locationTitle}>Get Your Location</h2>
             <p style={styles.locationSubtitle}>
-              Click the button below to automatically get your current location
+              Allow access to your location so we can show your real address
             </p>
             <button
               style={styles.getLocationButton}
               onClick={getLocation}
               disabled={isLoading}>
-              {isLoading ? 'Getting Location...' : 'Get My Location'}
+              {isLoading ? 'Getting location...' : 'Get My Location'}
             </button>
           </div>
         )}
@@ -196,9 +208,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     maxWidth: '500px',
     width: '100%',
     backgroundColor: '#FFFFFF',
-    borderRadius: '16px',
-    padding: '32px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    borderRadius: '20px',
+    padding: '40px 32px',
+    boxShadow: '0 4px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)',
   },
   title: {
     fontSize: '28px',
@@ -227,35 +239,54 @@ const styles: { [key: string]: React.CSSProperties } = {
     margin: 0,
   },
   locationCard: {
+    position: 'relative' as const,
     textAlign: 'center',
-    padding: '24px',
+    padding: '28px 24px 32px',
+    borderRadius: '16px',
+    backgroundColor: '#FAFBFC',
+    border: '1px solid #E8ECF0',
+    overflow: 'hidden',
+  },
+  locationCardAccent: {
+    position: 'absolute' as const,
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '4px',
+    background: 'linear-gradient(90deg, #C52B39 0%, #a0222e 100%)',
+  },
+  locationIconWrap: {
+    marginBottom: '16px',
   },
   locationIcon: {
-    fontSize: '64px',
-    marginBottom: '16px',
+    fontSize: '48px',
   },
   locationTitle: {
     fontSize: '20px',
     fontWeight: 'bold',
     color: '#1a1a1a',
-    marginBottom: '8px',
+    marginBottom: '12px',
+    letterSpacing: '-0.02em',
   },
   locationSubtitle: {
-    fontSize: '14px',
-    color: '#666',
+    fontSize: '15px',
+    color: '#64748B',
     marginBottom: '24px',
+    lineHeight: 1.5,
   },
-  locationAddress: {
-    fontSize: '16px',
-    color: '#1a1a1a',
-    marginBottom: '8px',
+  locationResolving: {
+    fontSize: '15px',
+    color: '#64748B',
+    marginBottom: '24px',
+    fontStyle: 'italic',
   },
   locationName: {
-    fontSize: '18px',
+    fontSize: '17px',
     fontWeight: '600',
     color: '#1a1a1a',
-    marginBottom: '24px',
-    lineHeight: 1.4,
+    marginBottom: '28px',
+    lineHeight: 1.5,
+    padding: '0 8px',
   },
   getLocationButton: {
     width: '100%',
@@ -263,23 +294,23 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: '#FFFFFF',
     border: 'none',
     borderRadius: '12px',
-    padding: '16px',
+    padding: '16px 24px',
     fontSize: '16px',
     fontWeight: '600',
     cursor: 'pointer',
-    transition: 'background-color 0.2s',
+    transition: 'background-color 0.2s, transform 0.1s',
   },
   confirmButton: {
     width: '100%',
-    backgroundColor: '#000000',
+    backgroundColor: '#0F172A',
     color: '#FFFFFF',
     border: 'none',
     borderRadius: '12px',
-    padding: '16px',
+    padding: '16px 24px',
     fontSize: '16px',
-    fontWeight: 'bold',
+    fontWeight: '600',
     cursor: 'pointer',
-    transition: 'background-color 0.2s',
+    transition: 'background-color 0.2s, transform 0.1s',
   },
   successContainer: {
     textAlign: 'center',
