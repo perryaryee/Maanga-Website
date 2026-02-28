@@ -10,6 +10,7 @@ function LocationRequestContent() {
   const [location, setLocation] = useState<GeolocationPosition | null>(null);
   const [address, setAddress] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isResolvingAddress, setIsResolvingAddress] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
   const [error, setError] = useState<string>('');
   const [success, setSuccess] = useState(false);
@@ -33,8 +34,9 @@ function LocationRequestContent() {
       async (position) => {
         setLocation(position);
         setIsLoading(false);
+        setIsResolvingAddress(true);
 
-        // Reverse geocode to get address using Google Maps Geocoding API
+        // Reverse geocode to get real location name (address) for the UI
         try {
           const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
           if (googleApiKey) {
@@ -52,6 +54,8 @@ function LocationRequestContent() {
           }
         } catch (e) {
           setAddress(`${position.coords.latitude}, ${position.coords.longitude}`);
+        } finally {
+          setIsResolvingAddress(false);
         }
       },
       (err) => {
@@ -120,9 +124,9 @@ function LocationRequestContent() {
       <div style={styles.container}>
         <div style={styles.successContainer}>
           <div style={styles.successIcon}>✓</div>
-          <h1 style={styles.successTitle}>Location Shared Successfully</h1>
+          <h1 style={styles.successTitle}>Location Confirmed</h1>
           <p style={styles.successText}>
-            Your location has been shared. The requester will be notified.
+            You have confirmed your location. The person who requested it has been notified.
           </p>
         </div>
       </div>
@@ -146,16 +150,22 @@ function LocationRequestContent() {
         {location ? (
           <div style={styles.locationCard}>
             <div style={styles.locationIcon}>📍</div>
-            <h2 style={styles.locationTitle}>Location Retrieved</h2>
-            {address && <p style={styles.locationAddress}>{address}</p>}
-            <p style={styles.locationCoords}>
-              {location.coords.latitude.toFixed(6)}, {location.coords.longitude.toFixed(6)}
-            </p>
+            <h2 style={styles.locationTitle}>Your location</h2>
+            {isResolvingAddress ? (
+              <p style={styles.locationAddress}>Resolving address...</p>
+            ) : (
+              <p style={styles.locationName}>{address || `${location.coords.latitude.toFixed(6)}, ${location.coords.longitude.toFixed(6)}`}</p>
+            )}
+            {!isResolvingAddress && address && (
+              <p style={styles.locationCoords}>
+                {location.coords.latitude.toFixed(6)}, {location.coords.longitude.toFixed(6)}
+              </p>
+            )}
             <button
-              style={styles.shareButton}
+              style={styles.confirmButton}
               onClick={shareLocation}
-              disabled={isSharing}>
-              {isSharing ? 'Sharing...' : 'Share Your Location'}
+              disabled={isSharing || isResolvingAddress}>
+              {isSharing ? 'Confirming...' : 'Confirm Location'}
             </button>
           </div>
         ) : (
@@ -245,6 +255,13 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: '#1a1a1a',
     marginBottom: '8px',
   },
+  locationName: {
+    fontSize: '18px',
+    fontWeight: '600',
+    color: '#1a1a1a',
+    marginBottom: '8px',
+    lineHeight: 1.4,
+  },
   locationCoords: {
     fontSize: '12px',
     color: '#999',
@@ -262,7 +279,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     cursor: 'pointer',
     transition: 'background-color 0.2s',
   },
-  shareButton: {
+  confirmButton: {
     width: '100%',
     backgroundColor: '#000000',
     color: '#FFFFFF',
