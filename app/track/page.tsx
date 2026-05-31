@@ -300,7 +300,7 @@ function TrackContent() {
   return (
     <section className="min-h-screen bg-[#F7F8FA] px-4 pb-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="pb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-red-100 bg-white px-3 py-1 text-sm font-semibold text-awcc-primary shadow-sm">
               <Route size={15} />
