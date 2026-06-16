@@ -124,11 +124,94 @@ function formatTime(value: Date | null) {
   return value.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-function getStatusProgress(status?: string) {
+function calculateDistanceKm(from: Coord, to: Coord) {
+  const earthRadiusKm = 6371;
+  const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
+  const dLat = toRadians(to.lat - from.lat);
+  const dLng = toRadians(to.lng - from.lng);
+  const lat1 = toRadians(from.lat);
+  const lat2 = toRadians(to.lat);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLng / 2) * Math.sin(dLng / 2) * Math.cos(lat1) * Math.cos(lat2);
+  return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function formatEta(distanceKm: number, speedKmh: number) {
+  if (!Number.isFinite(distanceKm) || distanceKm <= 0) return 'Arriving now';
+  const minutes = Math.max(1, Math.ceil((distanceKm / speedKmh) * 60));
+  return minutes === 1 ? '1 min' : `${minutes} mins`;
+}
+
+function clampProgress(value: number) {
+  return Math.max(0, Math.min(100, value));
+}
+
+function getStaticStatusProgress(status?: string) {
   if (!status || status === 'cancelled') return 0;
   const index = STATUS_ORDER.indexOf(status);
   if (index < 0) return 0;
   return Math.min(100, Math.max(8, (index / (STATUS_ORDER.length - 1)) * 100));
+}
+
+function getTrackingProgress(track: TrackPayload | null) {
+  if (!track) return { progress: 0, etaText: '' };
+  if (track.status === 'cancelled') return { progress: 0, etaText: '' };
+  if (track.status === 'awaiting_payment' || track.status === 'delivered') {
+    return { progress: 100, etaText: track.status === 'delivered' ? 'Completed' : 'Arrived' };
+  }
+
+  const pickupLat = parseCoord(track.pickupLatitude);
+  const pickupLng = parseCoord(track.pickupLongitude);
+  const dropoffLat = parseCoord(track.dropoffLatitude);
+  const dropoffLng = parseCoord(track.dropoffLongitude);
+  const riderLat = parseCoord(track.driver?.latitude);
+  const riderLng = parseCoord(track.driver?.longitude);
+
+  if (
+    riderLat == null ||
+    riderLng == null ||
+    pickupLat == null ||
+    pickupLng == null ||
+    dropoffLat == null ||
+    dropoffLng == null
+  ) {
+    return { progress: getStaticStatusProgress(track.status), etaText: '' };
+  }
+
+  const rider = { lat: riderLat, lng: riderLng };
+  const pickup = { lat: pickupLat, lng: pickupLng };
+  const dropoff = { lat: dropoffLat, lng: dropoffLng };
+
+  if (track.status === 'assigned') {
+    const distanceKm = calculateDistanceKm(rider, pickup);
+    const etaText = formatEta(distanceKm, 30);
+    const etaMinutes = Math.max(1, Math.ceil((distanceKm / 30) * 60));
+    const approachRatio = 1 - Math.min(etaMinutes, 20) / 20;
+    return {
+      progress: clampProgress(25 + approachRatio * 25),
+      etaText,
+    };
+  }
+
+  if (track.status === 'picked_up' || track.status === 'in_transit') {
+    const remainingKm = calculateDistanceKm(rider, dropoff);
+    const totalKm = calculateDistanceKm(pickup, dropoff);
+    const etaText = formatEta(remainingKm, 45);
+    if (totalKm > 0) {
+      const completedRatio = 1 - remainingKm / totalKm;
+      return {
+        progress: clampProgress(50 + completedRatio * 45),
+        etaText,
+      };
+    }
+    return {
+      progress: getStaticStatusProgress(track.status),
+      etaText,
+    };
+  }
+
+  return { progress: getStaticStatusProgress(track.status), etaText: '' };
 }
 
 function getPreviewMarkers(track: TrackPayload | null): PreviewMarker[] {
@@ -281,7 +364,8 @@ function TrackContent() {
 
   const statusMeta = getStatusMeta(track?.status);
   const StatusIcon = statusMeta.icon;
-  const progress = getStatusProgress(track?.status);
+  const trackingProgress = useMemo(() => getTrackingProgress(track), [track]);
+  const progress = trackingProgress.progress;
   const markers = useMemo(() => positionMarkers(getPreviewMarkers(track)), [track]);
   const mapPoints = markers.map((marker) => `${marker.x},${marker.y}`).join(' ');
   const mapsHref = buildMapsHref(track);
@@ -439,8 +523,8 @@ function TrackContent() {
                 />
                 <InfoCard
                   icon={<ShieldCheck size={21} />}
-                  label="Tracking link"
-                  value="Secure public status view"
+                  label="Estimated arrival"
+                  value={trackingProgress.etaText || 'Waiting for rider GPS'}
                 />
               </div>
             </div>
