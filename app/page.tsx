@@ -16,6 +16,9 @@ import appstore from "../assets/App_store.wine.png";
 import about from "../assets/pacel.jpg";
 import deliveryguy__ from "../assets/deliverYguy.jpg";
 
+const APP_STORE_URL = "https://apps.apple.com/gh/app/maanga/id6786241823";
+const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.maangalogistics.maanga&pli=1";
+
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
@@ -61,12 +64,24 @@ export default function Home() {
 
             <FadeIn direction="up" immediate delay={0.3}>
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
-                <Link href="#download-app" className="group w-full sm:w-auto">
-                <img src={playstore.src} alt="playstore" className="w-full max-w-[160px] sm:max-w-[218px] h-auto" /> 
-                </Link>
-                <Link href="#download-app" className="group w-full sm:w-auto">
-                <img src={appstore.src} alt="appstore" className="w-full max-w-[160px] sm:max-w-[190px] h-auto" /> 
-                </Link>
+                <a
+                  href={PLAY_STORE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group w-full sm:w-auto"
+                  aria-label="Download Maanga on Google Play"
+                >
+                  <img src={playstore.src} alt="Get it on Google Play" className="w-full max-w-[160px] sm:max-w-[218px] h-auto" />
+                </a>
+                <a
+                  href={APP_STORE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group w-full sm:w-auto"
+                  aria-label="Download Maanga on the App Store"
+                >
+                  <img src={appstore.src} alt="Download on the App Store" className="w-full max-w-[160px] sm:max-w-[190px] h-auto" />
+                </a>
               </div>
             </FadeIn>
           </div>
