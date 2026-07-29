@@ -2,6 +2,12 @@
 
 import { useCallback, useEffect, useMemo, useState, Suspense, type CSSProperties } from 'react';
 import { useSearchParams } from 'next/navigation';
+import {
+  sanitizeOrderId,
+  sanitizePaymentAmount,
+  sanitizePaymentReference,
+  sanitizeUuid,
+} from '@/lib/security';
 
 const APP_DEEP_LINK = 'maanga://payment-complete';
 
@@ -9,15 +15,24 @@ function PaymentDoneContent() {
   const searchParams = useSearchParams();
   const [triedOpen, setTriedOpen] = useState(false);
 
-  const reference = searchParams.get('reference') || searchParams.get('trxref');
-  const deliveryId = searchParams.get('deliveryId');
-  const orderId = searchParams.get('orderId');
-  const amount = searchParams.get('amount');
+  const rawReference = searchParams.get('reference') || searchParams.get('trxref');
+  const rawDeliveryId = searchParams.get('deliveryId');
+  const rawOrderId = searchParams.get('orderId');
+  const rawAmount = searchParams.get('amount');
+  const reference = sanitizePaymentReference(rawReference);
+  const deliveryId = sanitizeUuid(rawDeliveryId);
+  const orderId = sanitizeOrderId(rawOrderId);
+  const amount = sanitizePaymentAmount(rawAmount);
+  const hasInvalidReturnParams = Boolean(
+    (rawReference && !reference) ||
+    (rawDeliveryId && !deliveryId) ||
+    (rawOrderId && !orderId) ||
+    (rawAmount && !amount)
+  );
   const trackingHref = orderId ? `/track?orderId=${encodeURIComponent(orderId)}` : '/track';
   const formattedAmount = useMemo(() => {
     if (!amount) return null;
     const value = Number(amount);
-    if (!Number.isFinite(value)) return `GHS ${amount}`;
     return `GHS ${Math.round(value).toLocaleString()}`;
   }, [amount]);
 
@@ -77,6 +92,16 @@ function PaymentDoneContent() {
               <strong style={styles.referenceValue}>{reference || 'Not provided'}</strong>
             </div>
           </div>
+
+          {hasInvalidReturnParams ? (
+            <div style={styles.warningNotice}>
+              <strong style={styles.warningNoticeTitle}>Some payment return details were ignored</strong>
+              <p style={styles.warningNoticeText}>
+                The payment was received, but one or more return-link values were invalid. Use the
+                Maanga app to complete verification if the app does not open automatically.
+              </p>
+            </div>
+          ) : null}
 
           {deepLinkUrl ? (
             <>
@@ -297,6 +322,26 @@ const styles: Record<string, CSSProperties> = {
   noticeText: {
     margin: 0,
     color: '#7A4A00',
+    fontSize: 14,
+    lineHeight: 1.6,
+  },
+  warningNotice: {
+    backgroundColor: '#FFF7ED',
+    border: '1px solid #FDBA74',
+    borderRadius: 18,
+    padding: 18,
+    marginBottom: 18,
+  },
+  warningNoticeTitle: {
+    display: 'block',
+    color: '#9A3412',
+    fontSize: 15,
+    fontWeight: 900,
+    marginBottom: 6,
+  },
+  warningNoticeText: {
+    margin: 0,
+    color: '#9A3412',
     fontSize: 14,
     lineHeight: 1.6,
   },

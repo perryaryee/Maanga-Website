@@ -2,10 +2,13 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { isValidLatLng, limitText, sanitizeLocationToken } from '@/lib/security';
 
 function LocationRequestContent() {
   const searchParams = useSearchParams();
-  const token = searchParams.get('li');
+  const rawToken = searchParams.get('li');
+  const token = sanitizeLocationToken(rawToken);
+  const hasInvalidToken = Boolean(rawToken && !token);
   
   const [location, setLocation] = useState<GeolocationPosition | null>(null);
   const [address, setAddress] = useState<string>('');
@@ -16,10 +19,15 @@ function LocationRequestContent() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
+    if (hasInvalidToken) {
+      setError('Invalid location request link');
+      return;
+    }
+
     if (!token) {
       setError('Invalid location request link');
     }
-  }, [token]);
+  }, [token, hasInvalidToken]);
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -32,6 +40,12 @@ function LocationRequestContent() {
 
     navigator.geolocation.getCurrentPosition(
       async (position) => {
+        if (!isValidLatLng(position.coords.latitude, position.coords.longitude)) {
+          setIsLoading(false);
+          setError('Your browser returned an invalid location. Please try again.');
+          return;
+        }
+
         setLocation(position);
         setIsLoading(false);
         setIsResolvingAddress(true);
@@ -46,7 +60,7 @@ function LocationRequestContent() {
             );
             const data = await res.json();
             if (data?.status === 'OK' && data.results?.length > 0) {
-              resolvedAddress = data.results[0].formatted_address;
+              resolvedAddress = limitText(String(data.results[0].formatted_address || ''), 240);
             }
           }
           if (!resolvedAddress) {
@@ -55,16 +69,16 @@ function LocationRequestContent() {
               { headers: { 'Accept-Language': 'en' } }
             );
             const nomData = await nom.json();
-            if (nomData?.display_name) resolvedAddress = nomData.display_name;
+            if (nomData?.display_name) resolvedAddress = limitText(String(nomData.display_name), 240);
           }
           setAddress(resolvedAddress || '');
-        } catch (e) {
+        } catch {
           setAddress('');
         } finally {
           setIsResolvingAddress(false);
         }
       },
-      (err) => {
+      () => {
         setIsLoading(false);
         setError('Failed to get your location. Please ensure location permissions are enabled.');
       },
@@ -82,13 +96,18 @@ function LocationRequestContent() {
       return;
     }
 
+    if (!isValidLatLng(location.coords.latitude, location.coords.longitude)) {
+      setError('Your browser returned an invalid location. Please try again.');
+      return;
+    }
+
     setIsSharing(true);
     setError('');
 
     try {
       // Use relative API URL or environment variable
       const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.maangalogistics.com/api';
-      const response = await fetch(`${API_BASE_URL}/location-requests/respond/${token}`, {
+      const response = await fetch(`${API_BASE_URL}/location-requests/respond/${encodeURIComponent(token)}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +115,7 @@ function LocationRequestContent() {
         body: JSON.stringify({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
-          address: address || undefined,
+          address: address ? limitText(address, 240) : undefined,
         }),
       });
 
@@ -107,7 +126,7 @@ function LocationRequestContent() {
       } else {
         setError(data.message || 'Failed to share location');
       }
-    } catch (err: any) {
+    } catch {
       setError('Failed to share location. Please try again.');
     } finally {
       setIsSharing(false);

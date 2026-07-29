@@ -2,6 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { sanitizeUuid } from '@/lib/security';
 
 const RIDER_APP_SCHEME = 'maangarider://jobs/request';
 const RIDER_DOWNLOAD_URL = 'https://maangalogistics.com/download';
@@ -9,7 +10,9 @@ const RIDER_DOWNLOAD_URL = 'https://maangalogistics.com/download';
 function RiderRequestRedirectContent() {
   const searchParams = useSearchParams();
   const [triedOpen, setTriedOpen] = useState(false);
-  const deliveryId = searchParams.get('d') || searchParams.get('deliveryId');
+  const rawDeliveryId = searchParams.get('d') || searchParams.get('deliveryId');
+  const deliveryId = sanitizeUuid(rawDeliveryId);
+  const hasInvalidDeliveryId = Boolean(rawDeliveryId && !deliveryId);
 
   const deepLink = useMemo(() => {
     if (!deliveryId) return null;
@@ -33,11 +36,13 @@ function RiderRequestRedirectContent() {
       <section style={styles.card}>
         <div style={styles.logo}>M</div>
         <p style={styles.eyebrow}>Maanga Rider</p>
-        <h1 style={styles.title}>{deliveryId ? 'Open this request in the app' : 'Request link is incomplete'}</h1>
+        <h1 style={styles.title}>{deliveryId ? 'Open this request in the app' : 'Request link is invalid'}</h1>
         <p style={styles.copy}>
           {deliveryId
             ? 'Tap the button below if the Rider app does not open automatically.'
-            : 'This link is missing the request reference. Please open the Rider app and check available requests.'}
+            : hasInvalidDeliveryId
+              ? 'This request link has an invalid reference. Please open the Rider app and check available requests.'
+              : 'This link is missing the request reference. Please open the Rider app and check available requests.'}
         </p>
 
         {deepLink ? (

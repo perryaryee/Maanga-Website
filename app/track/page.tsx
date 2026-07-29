@@ -19,6 +19,7 @@ import {
   ShieldCheck,
   Truck,
 } from 'lucide-react';
+import { sanitizeOrderId, sanitizeUuid } from '@/lib/security';
 
 type TrackPayload = {
   orderId: string;
@@ -40,7 +41,7 @@ type PreviewMarker = {
 };
 type PositionedMarker = PreviewMarker & { x: number; y: number };
 
-const API_BASE = ('https://api.maangalogistics.com/api').replace(/\/$/, '');
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'https://api.maangalogistics.com/api').replace(/\/$/, '');
 
 const STATUS_ORDER = ['pending', 'assigned', 'picked_up', 'in_transit', 'awaiting_payment', 'delivered'];
 const STATUS_STEPS = [
@@ -282,8 +283,11 @@ function buildMapsHref(track: TrackPayload | null) {
 function TrackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const orderId = searchParams.get('orderId')?.trim() || '';
-  const deliveryId = searchParams.get('deliveryId')?.trim() || '';
+  const rawOrderId = searchParams.get('orderId')?.trim() || '';
+  const rawDeliveryId = searchParams.get('deliveryId')?.trim() || '';
+  const orderId = sanitizeOrderId(rawOrderId);
+  const deliveryId = sanitizeUuid(rawDeliveryId);
+  const hasInvalidTrackingParam = Boolean((rawOrderId && !orderId) || (rawDeliveryId && !deliveryId));
 
   const [track, setTrack] = useState<TrackPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -297,10 +301,17 @@ function TrackContent() {
   }, [orderId]);
 
   useEffect(() => {
-    if (!orderId) {
+    if (hasInvalidTrackingParam) {
       setTrack(null);
       setLoading(false);
-      setError('Missing order ID. Open the full link from your SMS or enter the order ID below.');
+      setError('This tracking link is invalid. Enter the order ID from your message to track the delivery.');
+      return;
+    }
+
+    if (!orderId && !deliveryId) {
+      setTrack(null);
+      setLoading(false);
+      setError('Missing tracking details. Open the full link from your SMS or enter the order ID below.');
       return;
     }
 
@@ -313,7 +324,8 @@ function TrackContent() {
       }
 
       try {
-        const query = new URLSearchParams({ orderId });
+        const query = new URLSearchParams();
+        if (orderId) query.set('orderId', orderId);
         if (deliveryId) query.set('deliveryId', deliveryId);
 
         const response = await fetch(`${API_BASE}/deliveries/public/track?${query.toString()}`, {
@@ -360,7 +372,7 @@ function TrackContent() {
       cancelled = true;
       window.clearInterval(timer);
     };
-  }, [orderId, deliveryId, refreshTick]);
+  }, [orderId, deliveryId, hasInvalidTrackingParam, refreshTick]);
 
   const statusMeta = getStatusMeta(track?.status);
   const StatusIcon = statusMeta.icon;
@@ -373,9 +385,9 @@ function TrackContent() {
 
   const handleManualSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const trimmedOrderId = manualOrderId.trim();
+    const trimmedOrderId = sanitizeOrderId(manualOrderId);
     if (!trimmedOrderId) {
-      setError('Enter an order ID to track your delivery.');
+      setError('Enter a valid order ID to track your delivery.');
       return;
     }
     router.push(`/track?orderId=${encodeURIComponent(trimmedOrderId)}`);
@@ -412,6 +424,7 @@ function TrackContent() {
                 id="track-order-id"
                 value={manualOrderId}
                 onChange={(event) => setManualOrderId(event.target.value)}
+                maxLength={32}
                 placeholder="Enter order ID"
                 className="min-h-11 w-full min-w-0 bg-transparent text-sm font-medium text-gray-900 outline-none placeholder:text-gray-400"
               />
@@ -439,7 +452,7 @@ function TrackContent() {
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-600">{error}</p>
                 </div>
               </div>
-              {orderId ? (
+              {orderId || deliveryId ? (
                 <button
                   onClick={() => setRefreshTick((tick) => tick + 1)}
                   className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 text-sm font-semibold text-gray-800 hover:border-awcc-primary hover:text-awcc-primary"
