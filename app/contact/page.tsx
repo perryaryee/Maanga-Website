@@ -70,7 +70,7 @@ export default function Contact() {
                                     <p className="text-white/90 mb-1 text-sm">+233 54 013 1193</p>
                                     <p className="text-white/90 mb-1 text-sm">+233 30 243 3953</p>
 
-                                    <p className="text-white/90 text-sm">Mon-Fri, 8am-5pm</p>
+                                    <p className="text-white/90 text-sm">Monday - Sunday</p>
                                 </div>
                             </div>
                         </FadeIn>
@@ -203,17 +203,9 @@ export default function Contact() {
                                 <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-100 shadow-md h-full">
                                     <h3 className="text-xl font-bold mb-6 text-gray-900">Office Hours</h3>
                                     <div className="space-y-4">
-                                        <div className="flex justify-between items-center pb-3 border-b border-gray-200">
-                                            <span className="text-gray-600 font-medium">Monday - Friday</span>
-                                            <span className="text-gray-900 font-semibold">8:00 AM - 5:00 PM</span>
-                                        </div>
-                                        <div className="flex justify-between items-center pb-3 border-b border-gray-200">
-                                            <span className="text-gray-600 font-medium">Saturday</span>
-                                            <span className="text-gray-900 font-semibold">9:00 AM - 2:00 PM</span>
-                                        </div>
                                         <div className="flex justify-between items-center">
-                                            <span className="text-gray-600 font-medium">Sunday</span>
-                                            <span className="text-gray-900 font-semibold">Closed</span>
+                                            <span className="text-gray-600 font-medium">Monday - Sunday</span>
+                                            <span className="text-gray-900 font-semibold">Open 24/7</span>
                                         </div>
                                     </div>
 
