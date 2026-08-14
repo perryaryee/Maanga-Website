@@ -64,12 +64,6 @@ export const metadata: Metadata = {
       "Your trusted partner for on-demand delivery, relocation, and business logistics across Ghana.",
     images: [{ url: "/logo_icon.png", width: 512, height: 512, alt: "Maanga Logistics" }],
   },
-  twitter: {
-    card: "summary",
-    title: "Maanga Logistics - Swift. Safe. Smart Deliveries Across Ghana",
-    description: "Your trusted partner for on-demand delivery and logistics across Ghana.",
-    images: ["/logo_icon.png"],
-  },
   icons: {
     icon: [
       { url: "/favicon.png", type: "image/png", sizes: "32x32" },
