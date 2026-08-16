@@ -8,6 +8,7 @@ import too_big from "../../assets/too_big.jpg";
 import local from "../../assets/local.jpg";
 import relocating from "../../assets/relocating.jpg";
 import intercity from "../../assets/intercity.jpg";
+import okadaRide from "../../assets/okada-ride.png";
 
 
 export default function Services() {
@@ -171,14 +172,14 @@ export default function Services() {
                         </div>
                     </FadeIn>
 
-                    {/* Corporate Dispatch */}
+                    {/* Okada Ride */}
                     <FadeIn delay={0.4}>
                         <div className="mb-12">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
                                 <div className="order-2 lg:order-1 relative h-[400px] rounded-2xl overflow-hidden shadow-xl group">
                                     <img
-                                        src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80"
-                                        alt="Corporate Dispatch"
+                                        src={okadaRide.src}
+                                        alt="Okada Ride"
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         loading="lazy"
                                     />
@@ -188,19 +189,17 @@ export default function Services() {
                                         <span className="h-px w-8 bg-awcc-primary"></span>
                                         <span className="text-sm font-semibold text-awcc-primary uppercase tracking-wider">Service</span>
                                     </div>
-                                    <h2 className="text-4xl font-bold text-gray-900 mb-6">Corporate Dispatch</h2>
+                                    <h2 className="text-4xl font-bold text-gray-900 mb-6">Okada Ride</h2>
                                     <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                                        Dedicated logistics solutions for large organizations including banks, schools, telecoms, hospitals, and other large companies. We provide dedicated fleet management, monthly contracts, and invoice billing.
+                                        A fast motor ride option for customers who need quick pickup and drop-off across town. Book an Okada rider from the Maanga app and follow the trip in real time.
                                     </p>
                                     <div className="space-y-4 mb-6">
                                         <div>
-                                            <h3 className="text-lg font-bold text-gray-900 mb-3">Who We Serve:</h3>
+                                            <h3 className="text-lg font-bold text-gray-900 mb-3">Best For:</h3>
                                             <ul className="space-y-2">
-                                                <li className="text-gray-600">• Banks</li>
-                                                <li className="text-gray-600">• Schools</li>
-                                                <li className="text-gray-600">• Telecoms</li>
-                                                <li className="text-gray-600">• Hospitals</li>
-                                                <li className="text-gray-600">• Large companies</li>
+                                                <li className="text-gray-600">• Quick city trips</li>
+                                                <li className="text-gray-600">• Everyday movement</li>
+                                                <li className="text-gray-600">• Fast pickup and drop-off</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -210,19 +209,19 @@ export default function Services() {
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-awcc-primary mt-0.5 flex-shrink-0">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                             </svg>
-                                            <span className="text-gray-700">Dedicated fleet</span>
+                                            <span className="text-gray-700">Verified motor riders</span>
                                         </div>
                                         <div className="flex items-start gap-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-awcc-primary mt-0.5 flex-shrink-0">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                             </svg>
-                                            <span className="text-gray-700">Monthly contracts</span>
+                                            <span className="text-gray-700">Live ride tracking</span>
                                         </div>
                                         <div className="flex items-start gap-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-awcc-primary mt-0.5 flex-shrink-0">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                             </svg>
-                                            <span className="text-gray-700">Invoice billing</span>
+                                            <span className="text-gray-700">Clear upfront fares</span>
                                         </div>
                                     </div>
                                 </div>

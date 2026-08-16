@@ -11,6 +11,7 @@ import image3 from "../assets/too_big.jpg";
 import local from "../assets/local.jpg";
 import relocating from "../assets/relocating.jpg";
 import intercity from "../assets/intercity.jpg";
+import okadaRide from "../assets/okada-ride.png";
 import playstore from "../assets/playstore.png";
 import appstore from "../assets/App_store.wine.png";
 import about from "../assets/pacel.jpg";
@@ -100,7 +101,7 @@ export default function Home() {
                 </div>
                 <h2 className="text-5xl sm:text-6xl font-bold text-gray-900 mb-6 tracking-tight">Who We Are</h2>
                 <p className="text-xl text-gray-600 leading-relaxed mb-8">
-                  Maanga Logistics Ghana is a technology-driven logistics company providing reliable delivery, relocation, and corporate dispatch services across Ghana using a hybrid fleet model.
+                  Maanga Logistics Ghana is a technology-driven logistics company providing reliable delivery, relocation, and Okada motor ride services across Ghana using a hybrid fleet model.
                 </p>
                 <Link href="/about">
                   <Button variant="outline" size="lg" className="border-2 border-awcc-primary text-awcc-primary hover:bg-awcc-primary hover:text-white px-8 py-4 rounded-xl">
@@ -156,10 +157,10 @@ export default function Home() {
                 image: intercity.src
               },
               {
-                title: "Corporate Dispatch",
-                desc: "Banks, schools, businesses",
-                icon: "M20.25 14.15v4.25c0 .414-.336.75-.75.75h-4.5a.75.75 0 01-.75-.75v-4.25m0 0l4.5-5.25m-4.5 5.25l-4.5-5.25M3.75 14.15v4.25c0 .414.336.75.75.75h4.5a.75.75 0 01-.75-.75v-4.25m0 0l4.5-5.25m-4.5 5.25l-4.5-5.25",
-                image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80"
+                title: "Okada Ride",
+                desc: "Fast motor rides across town",
+                icon: "M5.25 17.25a2.25 2.25 0 104.5 0 2.25 2.25 0 00-4.5 0zm9 0a2.25 2.25 0 104.5 0 2.25 2.25 0 00-4.5 0zM8.25 17.25h6m-4.5-6h2.25l2.25 3h2.25m-8.25-3l1.5-3h2.25m-4.5 3H6l-1.5 3h3.75m9.75 0h1.5",
+                image: okadaRide.src
               }
             ].map((service, index) => (
               <FadeIn key={index} delay={index * 0.15} className="group">

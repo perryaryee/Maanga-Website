@@ -12,7 +12,7 @@ export default function About() {
         <div className="bg-white min-h-screen">
             <PageHero
                 title="About Maanga "
-                subtitle="Maanga Logistics Ghana is a technology-driven logistics company providing reliable delivery, relocation, and corporate dispatch services across Ghana using a hybrid fleet model."
+                subtitle="Maanga Logistics Ghana is a technology-driven logistics company providing reliable delivery, relocation, and Okada motor ride services across Ghana using a hybrid fleet model."
                 image={hero.src}
             />
 

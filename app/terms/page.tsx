@@ -31,7 +31,7 @@ export default function TermsPage() {
       content: (
         <>
           <p className="text-gray-600 leading-relaxed mb-4">
-            Maanga Logistics provides on-demand delivery, relocation, and corporate logistics services across Ghana. Our platform connects customers with verified driver partners for package delivery, document dispatch, relocation assistance, and business logistics solutions.
+            Maanga Logistics provides on-demand delivery, relocation, and Okada motor ride services across Ghana. Our platform connects customers with verified rider and driver partners for package delivery, document dispatch, relocation assistance, and everyday motor rides.
           </p>
           <p className="text-gray-600 leading-relaxed">
             Services are subject to availability within our operating areas. We strive to provide accurate estimates for delivery times and pricing, but actual results may vary based on traffic, weather, and other factors beyond our control.
